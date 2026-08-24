@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BustGuard | Medium-range bust detection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="accent.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">B</span><span>Bust<span class="brand-accent">Guard</span></span></div>
+      <div class="workspace-label">Forecast intelligence</div>
+      <nav>
+        <a class="nav-item active" href="#overview"><span class="nav-icon">◈</span> Overview</a>
+        <a class="nav-item" href="#signals"><span class="nav-icon">⌁</span> Bust signals <span class="nav-count">4</span></a>
+        <a class="nav-item" href="#runs"><span class="nav-icon">↗</span> Analysis runs</a>
+        <a class="nav-item" href="#settings"><span class="nav-icon">⊙</span> Model settings</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="status-dot"><i></i> <span id="feedStatus">Connecting to live data</span></div>
+        <div class="feed-copy" id="feedCopy">ECMWF ENS · Open-Meteo<br>Fetching latest run...</div>
+        <button class="profile"><span>IA</span><div><strong>Idea Architect</strong><small>Forecast intelligence</small></div><b>⌄</b></button>
+      </div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <header class="topbar"><div class="breadcrumb">Operations <span>/</span> India</div><div class="top-actions"><span class="last-run">Last run <b id="lastRun">connecting...</b></span><button class="icon-button" title="Notifications">♢<em></em></button><button class="avatar">IA</button></div></header>
+      <section class="page-heading"><div><p class="eyebrow">MEDIUM-RANGE FORECAST MONITOR</p><h1>Where could the forecast break?</h1><p class="intro">AI-assisted detection of ensemble divergence, regime shifts, and systematic bias before they become surprises.</p></div><button class="run-button" id="runAnalysis"><span>✦</span> Run fresh analysis</button></section>
+
+      <section class="control-strip" aria-label="Analysis controls">
+        <label>CITY<input id="city" type="text" value="New Delhi" placeholder="Enter a city" autocomplete="off"></label><button class="city-submit" id="citySubmit" type="button">Let's go <span>→</span></button>
+        <label>FORECAST HORIZON<div class="range-wrap"><input id="horizon" type="range" min="5" max="15" value="10"><output id="horizonValue">D+10</output></div></label>
+        <label>ALERT THRESHOLD<div class="threshold"><button class="threshold-btn selected" data-threshold="55">55%</button><button class="threshold-btn" data-threshold="70">70%</button><button class="threshold-btn" data-threshold="85">85%</button></div></label>
+        <div class="control-meta"><span class="pulse"></span> 12 signals monitored</div>
+      </section>
+
+      <section class="summary-grid" aria-label="Forecast summary">
+        <article class="metric-card risk-card"><div class="card-top"><span class="metric-label">BUST RISK INDEX</span><span class="live-tag">LIVE</span></div><div class="metric-value"><strong id="riskValue">68</strong><span>/ 100</span><i id="riskTrend">↑ 7</i></div><div class="meter"><span id="riskMeter"></span></div><p id="riskMessage">Elevated · confidence is decaying faster than normal</p></article>
+        <article class="metric-card"><div class="card-top"><span class="metric-label">ENSEMBLE AGREEMENT</span><span class="metric-icon">∿</span></div><div class="metric-value"><strong id="agreementValue">42</strong><span>%</span></div><div class="mini-bars" id="agreementBars"></div><p>Across 51 members · <b class="bad">−18% vs climatology</b></p></article>
+        <article class="metric-card"><div class="card-top"><span class="metric-label">NEXT INFLECTION</span><span class="metric-icon">◷</span></div><div class="metric-value"><strong>D+7</strong><span> / 168h</span></div><div class="inflection-line"><span></span><b>Thu 14 Mar</b></div><p>Most likely regime transition window</p></article>
+        <article class="metric-card"><div class="card-top"><span class="metric-label">MODEL CONFIDENCE</span><span class="metric-icon">◎</span></div><div class="metric-value"><strong id="confidenceValue">61</strong><span>%</span></div><div class="confidence-bar"><span id="confidenceBar"></span></div><p id="confidenceCopy">Moderate · human review recommended</p></article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel signal-panel" id="signals"><div class="panel-heading"><div><p class="eyebrow">PRIMARY SIGNAL</p><h2>Confidence decay profile</h2></div><button class="more-button" title="More options">•••</button></div><div class="legend"><span><i class="legend-line"></i> Current run</span><span><i class="legend-dash"></i> Climatological decay</span><span class="chart-unit">CONFIDENCE · %</span></div><div class="chart-wrap"><div class="y-labels"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div><svg class="chart" viewBox="0 0 720 250" preserveAspectRatio="none" aria-label="Confidence decay chart"><defs><linearGradient id="fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#f27d62" stop-opacity=".28"/><stop offset="1" stop-color="#f27d62" stop-opacity="0"/></linearGradient></defs><path class="grid-lines" d="M0 20H720 M0 72H720 M0 124H720 M0 176H720 M0 228H720"/><path class="climo" d="M0 20 C90 26 130 48 200 72 S330 115 410 135 S570 174 720 190"/><path id="chartArea" class="area" d="M0 20 C72 25 120 44 184 62 S300 114 370 124 S470 189 540 174 S630 203 720 218 L720 228 L0 228Z"/><path id="chartLine" class="current-line" d="M0 20 C72 25 120 44 184 62 S300 114 370 124 S470 189 540 174 S630 203 720 218"/><circle id="chartPoint" class="chart-point" cx="470" cy="189" r="6"/><line id="nowLine" class="now-line" x1="470" y1="0" x2="470" y2="228"/></svg><div class="x-labels"><span>Now</span><span>D+3</span><span>D+6</span><span>D+9</span><span>D+12</span><span>D+15</span></div></div><div class="chart-callout"><span class="callout-pin">!</span><div><strong>Break point detected at D+7</strong><p>Agreement falls below your 55% alert threshold as the Atlantic ridge weakens.</p></div><span class="callout-score">0.78 <small>likelihood</small></span></div></article>
+        <article class="panel drivers-panel"><div class="panel-heading"><div><p class="eyebrow">AI EXPLANATION</p><h2>What is driving the risk?</h2></div><span class="ai-badge">✦ AI</span></div><div class="driver-list"><div class="driver"><div class="driver-icon coral">≈</div><div class="driver-main"><div><strong>Regime shift risk</strong><span>High</span></div><p>NAO signal flips positive in 68% of members.</p><div class="driver-meter"><i style="width:84%"></i></div></div><b>84</b></div><div class="driver"><div class="driver-icon amber">⌁</div><div class="driver-main"><div><strong>Spread acceleration</strong><span>Elevated</span></div><p>500 hPa height spread +42m since D+5.</p><div class="driver-meter"><i style="width:67%"></i></div></div><b>67</b></div><div class="driver"><div class="driver-icon blue">◒</div><div class="driver-main"><div><strong>Recent bias drift</strong><span>Watch</span></div><p>Warm bias emerging over Iberia.</p><div class="driver-meter"><i style="width:39%"></i></div></div><b>39</b></div></div><button class="text-button" id="explainButton">View full model reasoning <span>→</span></button></article>
+      </section>
+
+      <section class="bottom-grid"><article class="panel matrix-panel"><div class="panel-heading"><div><p class="eyebrow">IMPACT OUTLOOK</p><h2>Risk by variable</h2></div><span class="updated">Updated just now</span></div><div class="risk-table"><div class="table-head"><span>VARIABLE</span><span>RISK</span><span>EXPECTED ERROR</span></div><div class="table-row"><strong>Temperature</strong><div class="risk-cell"><i class="risk-high"></i> High</div><span>± 3.8°C</span></div><div class="table-row"><strong>Precipitation</strong><div class="risk-cell"><i class="risk-med"></i> Elevated</div><span>± 14 mm</span></div><div class="table-row"><strong>Wind speed</strong><div class="risk-cell"><i class="risk-low"></i> Low</div><span>± 4 kt</span></div><div class="table-row"><strong>Pressure</strong><div class="risk-cell"><i class="risk-med"></i> Elevated</div><span>± 9 hPa</span></div></div></article><article class="panel activity-panel" id="runs"><div class="panel-heading"><div><p class="eyebrow">RUN HISTORY</p><h2>Recent analyses</h2></div><button class="more-button">•••</button></div><div class="run-list"><div class="run"><span class="run-status stable"></span><div><strong>India · New Delhi</strong><small>Today, 08:12 UTC · D+10</small></div><b>68</b></div><div class="run"><span class="run-status watch"></span><div><strong>India · New Delhi</strong><small>Yesterday, 20:04 UTC · D+10</small></div><b>61</b></div><div class="run"><span class="run-status low"></span><div><strong>India · New Delhi</strong><small>Yesterday, 08:01 UTC · D+10</small></div><b>54</b></div></div><button class="text-button">Open analysis history <span>→</span></button></article></section>
+      <footer><span>BustGuard intelligence engine v2.4</span><span>For decision support · not a replacement for official guidance</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast">Fresh analysis complete <span>Risk profile updated</span></div>
+  <script src="app.js?v=5"></script>
+</body>
+</html>
